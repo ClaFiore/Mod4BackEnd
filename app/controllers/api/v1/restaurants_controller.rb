@@ -4,7 +4,8 @@ class Api::V1::RestaurantsController < ApplicationController
     def index
         lat = 38.907192
         long = -77.036873
-        url = "https://developers.zomato.com/api/v2.1/search?lat=#{lat}&lon=#{long}&radius=1000"
+        start = params[:start]
+        url = "https://developers.zomato.com/api/v2.1/search?start=#{start}&lat=#{lat}&lon=#{long}&radius=1000"
      
         response = Excon.get(
             url,
