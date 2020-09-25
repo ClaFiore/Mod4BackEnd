@@ -16,7 +16,12 @@ class Api::V1::RestaurantsController < ApplicationController
 
         data = JSON.parse(response.body)
         data["restaurants"].each do |rest|
-            Restaurant.find_or_create_by(zomato_rest_id: rest["restaurant"]["id"])
+            r = Restaurant.find_or_create_by(zomato_rest_id: rest["restaurant"]["id"])
+                if r.tables.length == 0 
+                    rand(10..20).times do
+                        Table.create(restaurant_id: r.id, seats: rand(2..8))
+                    end
+                end
         end
         
         data = data["restaurants"].map do |rest|
