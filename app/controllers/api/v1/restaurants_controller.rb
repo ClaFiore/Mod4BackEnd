@@ -18,6 +18,22 @@ class Api::V1::RestaurantsController < ApplicationController
         data["restaurants"].each do |rest|
             Restaurant.find_or_create_by(zomato_rest_id: rest["restaurant"]["id"])
         end
+        
+        data = data["restaurants"].map do |rest|
+            { 
+                id: rest["restaurant"]["id"],
+                name: rest["restaurant"]["name"],
+                location: rest["restaurant"]["location"],
+                cuisines: rest["restaurant"]["cuisines"],
+                timings: rest["restaurant"]["timings"],
+                price_range: rest["restaurant"]["price_range"],
+                thumb: rest["restaurant"]["thumb"],
+                rating: rest["restaurant"]["user_rating"]["aggregate_rating"],
+                featured_img: rest["restaurant"]["featured_image"],
+                phone_numbers: rest["restaurant"]["phone_numbers"]
+
+            }
+        end
 
         render json: data
     end
