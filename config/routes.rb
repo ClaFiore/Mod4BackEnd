@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :restaurants
       resources :reservations
       resources :users
+      post '/login', to: 'auth#create'
     end
   end
 end

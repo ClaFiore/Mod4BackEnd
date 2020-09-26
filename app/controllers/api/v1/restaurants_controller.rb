@@ -1,6 +1,8 @@
 require 'rest-client'
 
 class Api::V1::RestaurantsController < ApplicationController
+    skip_before_action :logged_in?, only: [:index]
+    
     def index
         lat = 38.907192
         long = -77.036873
