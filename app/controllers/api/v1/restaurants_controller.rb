@@ -4,22 +4,30 @@ class Api::V1::RestaurantsController < ApplicationController
     skip_before_action :logged_in?, only: [:index]
     
     def index
+        
         lat = 38.907192
         long = -77.036873
         start = params[:start]
-        url = "https://developers.zomato.com/api/v2.1/search?start=#{start}&lat=#{lat}&lon=#{long}&radius=1000"
-     
+        if !params[:cuisines]
+            url = "https://developers.zomato.com/api/v2.1/search?start=#{start}&lat=#{lat}&lon=#{long}&radius=1000"
+        else
+            if params[:cuisines].split(",").length == 1
+                cuisines = params[:cuisines]
+            else
+                cuisines = params[:cuisines].split(",").join("%2C$20")
+            end
+            url = "https://developers.zomato.com/api/v2.1/search?start=#{start}&lat=#{lat}&lon=#{long}&radius=20000&cuisines=#{cuisines}"
+        end
         response = Excon.get(
             url,
             headers: {
             'X-RapidAPI-Host' => URI.parse(url).host,
-            'user-key' => "1f5bbdd1226212f97f0e19baadadc96f"
+            'user-key' => "1b316afe0f10805aa36886e94f4f65fe"#"1f5bbdd1226212f97f0e19baadadc96f"
             }
         )
 
         data = JSON.parse(response.body)
-       
-        
+     
         data = data["restaurants"].map do |rest|
             { 
                 id: rest["restaurant"]["id"],
