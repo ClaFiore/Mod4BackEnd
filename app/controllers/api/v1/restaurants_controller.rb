@@ -13,7 +13,7 @@ class Api::V1::RestaurantsController < ApplicationController
             url,
             headers: {
             'X-RapidAPI-Host' => URI.parse(url).host,
-            'user-key' => ENV.fetch("RAPIDAPI_API_KEY")
+            'user-key' => "1f5bbdd1226212f97f0e19baadadc96f"
             }
         )
 
