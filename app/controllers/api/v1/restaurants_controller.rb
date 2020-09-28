@@ -1,7 +1,7 @@
 require 'rest-client'
 
 class Api::V1::RestaurantsController < ApplicationController
-    skip_before_action :logged_in?, only: [:index]
+    skip_before_action :logged_in?, only: [:index, :show]
     
     def index
         
@@ -53,5 +53,9 @@ class Api::V1::RestaurantsController < ApplicationController
     end
 
     def show
+        
+        rest = Restaurant.find_by(zomato_rest_id: params[:id])
+        availableHours = rest.availableHours(params[:date], params[:party_size])
+        render json: availableHours
     end
 end
