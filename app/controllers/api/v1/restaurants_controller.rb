@@ -11,11 +11,7 @@ class Api::V1::RestaurantsController < ApplicationController
         if !params[:cuisines]
             url = "https://developers.zomato.com/api/v2.1/search?start=#{start}&lat=#{lat}&lon=#{long}&radius=1000"
         else
-            if params[:cuisines].split(",").length == 1
-                cuisines = params[:cuisines]
-            else
-                cuisines = params[:cuisines].split(",").join("%2C$20")
-            end
+            cuisines = params[:cuisines]
             url = "https://developers.zomato.com/api/v2.1/search?start=#{start}&lat=#{lat}&lon=#{long}&radius=20000&cuisines=#{cuisines}"
         end
         response = Excon.get(
