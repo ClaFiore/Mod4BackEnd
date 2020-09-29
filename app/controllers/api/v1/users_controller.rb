@@ -20,6 +20,21 @@ class Api::V1::UsersController < ApplicationController
         end
     end
 
+    def update
+        @user.update(user_params)
+        if @user.valid?
+            @user.save
+            render json: {message: 'Updated Successfully'}, status: 200
+        else
+            render json: {error: 'Failed to update user information'}, status: :not_acceptable
+        end
+    end
+
+    def destroy
+        @user.destroy
+        
+    end
+
     private
 
     def user_params
