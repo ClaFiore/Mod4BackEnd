@@ -7,8 +7,7 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def show
-        user = User.find_by(id: params[:id])
-        render json: user, except: [:updated_at, :created_at], include: [:reservations => {except: [:created_at, :updated_at]}]
+        render json: @user, except: [:updated_at, :created_at], include: [:reservations => {except: [:created_at, :updated_at]}]
     end
 
     def create
