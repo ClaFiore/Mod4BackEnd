@@ -21,4 +21,15 @@ class Api::V1::ReservationsController < ApplicationController
             render json: {error: 'Failed to create new reservation'}
         end
     end
+
+    def update
+    end
+
+    def destroy
+        reservation = Reservation.find_by(id: params[:id])
+        reservation.destroy
+
+        render json: {message: "Reservation has been deleted"}
+    end
+
 end
