@@ -11,10 +11,10 @@ class ApplicationController < ActionController::API
 
         begin
             user_id = JWT.decode(token, 'ClaSte')[0]['user_id']
-            user = User.find(user_id)
+            @user = User.find(user_id)
         rescue
-            user = nil
+            @user = nil
         end
-        render json: {error: 'Please Login'} unless user
+        render json: {error: 'Please Login'} unless @user
     end
 end

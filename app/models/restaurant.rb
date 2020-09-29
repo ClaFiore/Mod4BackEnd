@@ -6,7 +6,7 @@ class Restaurant < ApplicationRecord
         openHours = [10, 11, 12, 13, 14, 17, 18, 19, 20, 21]
         availableHours =[]
         availableTables = []
-        tables = self.tables.where("seats > #{party_size.to_i}")#5 tables
+        tables = self.tables.where("seats >= #{party_size.to_i}")#5 tables
         
         openHours.each do |hr|
             tables.each do |table|
