@@ -18,7 +18,7 @@ class Api::V1::ReservationsController < ApplicationController
             reservation.save
             render json: {message: 'Reservation was successfully created'}
         else
-            render json: {error: 'Failed to create new reservation'}
+            render json: {error: reservation.errors.full_messages.join('; ')}
         end
     end
 

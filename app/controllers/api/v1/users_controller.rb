@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApplicationController
             user.save
             render json: {username: user.username, token: encode_token({user_id: user.id})}, status: 200
         else
-            render json: {error: 'Failed to create new account'}, status: :not_acceptable
+            render json: {error: user.errors.full_messages}, status: :not_acceptable
         end
     end
 
@@ -26,7 +26,7 @@ class Api::V1::UsersController < ApplicationController
             @user.save
             render json: {message: 'Updated Successfully'}, status: 200
         else
-            render json: {error: 'Failed to update user information'}, status: :not_acceptable
+            render json: {error: @user.errors.full_messages}, status: :not_acceptable
         end
     end
 
